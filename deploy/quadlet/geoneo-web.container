@@ -1,0 +1,11 @@
+[Container]
+Image=localhost/geoneo-web:latest
+Network=geoneo.network
+PublishPort=80:80
+DependsOn=geoneo-engine.container
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

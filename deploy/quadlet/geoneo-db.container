@@ -1,0 +1,14 @@
+[Container]
+Image=docker.io/library/mysql:8.0
+Network=geoneo.network
+Volume=geoneo-db.volume:/var/lib/mysql
+Environment=MYSQL_ROOT_PASSWORD=rootpassword
+Environment=MYSQL_DATABASE=traccar
+Environment=MYSQL_USER=traccar
+Environment=MYSQL_PASSWORD=traccarpassword
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
