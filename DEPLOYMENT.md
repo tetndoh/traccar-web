@@ -30,7 +30,19 @@ For the Traccar engine to connect to our MySQL database, you need a `traccar.xml
 
 *Note: Update `deploy/quadlet/geoneo-engine.container` to uncomment and map your `traccar.xml` volume if you want a custom configuration.*
 
-## Step 3: Deploy using Quadlets
+## Step 3: Configure Traefik Proxy (Optional)
+
+If you are using a Traefik instance in your production environment to proxy applications, the `geoneo-web.container` is pre-configured with Traefik labels.
+
+Before deploying, edit `deploy/quadlet/geoneo-web.container` and adjust the Traefik rules to match your production domain:
+
+```ini
+Label=traefik.http.routers.geoneo.rule=Host(`your-production-domain.com`)
+```
+
+Ensure your Traefik container shares a network with the GeoNeo Podman containers or is capable of routing traffic to the internal port 80 exposed by the GeoNeo Web container.
+
+## Step 4: Deploy using Quadlets
 
 Quadlet files simplify deploying podman containers as systemd services.
 
@@ -68,7 +80,7 @@ Quadlet files simplify deploying podman containers as systemd services.
     systemctl --user enable geoneo-db.service geoneo-engine.service geoneo-web.service
     ```
 
-## Step 4: Initialize Default Users
+## Step 5: Initialize Default Users
 
 Once the services are up and running, you need to configure the database with default mockup users. We provide a bash script that interacts with the Traccar API to update the default admin and create a mock user.
 
@@ -82,11 +94,9 @@ Run the initialization script:
 - **Admin**: `admin@geoneo.com` / `admin1234`
 - **User**: `user@geoneo.com` / `user1234`
 
-## Step 5: Access the Application
+## Step 6: Access the Application
 
-Open your web browser and navigate to:
-
-`http://localhost:80` (or the IP address of your server).
+Open your web browser and navigate to the domain you configured in your Traefik labels (or `http://localhost` if you exposed the port manually).
 
 You should see the modern GeoNeo public homepage. Clicking "Sign In" will take you to the login screen, and successfully logging in with the credentials above will take you to the interactive tracking dashboard and billing features.
 

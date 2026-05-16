@@ -1,8 +1,16 @@
 [Container]
 Image=localhost/geoneo-web:latest
 Network=geoneo.network
-PublishPort=80:80
 DependsOn=geoneo-engine.container
+
+# If Traefik is running on the host or a shared network, uncomment PublishPort
+# PublishPort=8080:80
+
+# Traefik configuration labels
+Label=traefik.enable=true
+Label=traefik.http.routers.geoneo.rule=Host(`geoneo.local`)
+Label=traefik.http.routers.geoneo.entrypoints=web
+Label=traefik.http.services.geoneo.loadbalancer.server.port=80
 
 [Service]
 Restart=always
