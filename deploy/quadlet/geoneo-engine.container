@@ -1,0 +1,15 @@
+[Container]
+Image=traccar/traccar:latest
+Network=geoneo.network
+Volume=geoneo-logs.volume:/opt/traccar/logs:Z
+# Note: You should map a local traccar.xml here in production
+# Volume=/etc/geoneo/traccar.xml:/opt/traccar/conf/traccar.xml:ro,Z
+PublishPort=5000-5150:5000-5150/tcp
+PublishPort=5000-5150:5000-5150/udp
+DependsOn=geoneo-db.container
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
