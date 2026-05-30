@@ -100,6 +100,23 @@ Open your web browser and navigate to the domain you configured in your Traefik 
 
 You should see the modern GeoNeo public homepage. Clicking "Sign In" will take you to the login screen, and successfully logging in with the credentials above will take you to the interactive tracking dashboard and billing features.
 
-## Future Development
+## Roadmap & Future Development Checklist
 
-To fully realize the GeoNeo vision (restricting devices based on payment, custom subscriptions), modifications to the Java code inside the `traccar` engine repository or a separate microservice will be required to handle payment gateway integrations (MTN MoMo, Orange Money) and API validations.
+To fully realize the GeoNeo vision as a complete, autonomous business SaaS, several features remain to be developed or completed. Since this repository focuses on the frontend, many of these require backend changes in the Traccar Engine or a supplementary microservice.
+
+### 1. Backend & Billing Engine (The Core Missing Piece)
+- [ ] **Subscription Database Models:** Create tables to store subscription tiers (e.g., Fleet Pro, Individual), billing cycles, and payment histories.
+- [ ] **Local Payment Gateway Integration:** Implement backend API controllers to process and verify transactions via MTN Mobile Money, Orange Money, and Visa/Mastercard.
+- [ ] **Access Control & Restriction Logic:** Update the Traccar authorization middleware so that users with expired or unpaid subscriptions are restricted from adding new assets or accessing live maps.
+- [ ] **Automated Invoicing:** Generate and email monthly PDF invoices to enterprise clients.
+
+### 2. Frontend & UX Enhancements
+- [ ] **Complete Bilingual Support:** Translate all new marketing copy and dashboard additions into French. Currently, the framework is in place, but exact UI strings need translation keys.
+- [ ] **Dynamic Billing Dashboard:** Connect the `BillingPage.jsx` mockups to the new backend endpoints to display real subscription status, active devices count, and actual payment history.
+- [ ] **Advanced Fleet Reporting:** Build customized, exportable reports (Excel/PDF) specifically tailored to the logistics and container tracking market in Central Africa.
+- [ ] **Custom Onboarding Flow:** Create a guided tutorial for new users who sign up via the public marketing site to help them connect their first GPS tracker.
+
+### 3. Infrastructure & Operations
+- [ ] **Automated SSL/TLS (Let's Encrypt):** Configure Traefik to automatically fetch and renew HTTPS certificates for the production domain.
+- [ ] **CI/CD Pipeline:** Set up GitHub Actions or GitLab CI to automatically run `npm run build`, create the Docker image, and push it to a registry upon code commits.
+- [ ] **Database Backups:** Implement automated nightly backups for the MySQL `geoneo-db` volume to AWS S3 or a secondary storage instance.
